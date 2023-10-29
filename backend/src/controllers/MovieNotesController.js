@@ -6,10 +6,12 @@ const knex = require('../database/knex');
 class MovieNotesController {
   async create(req, res) {
     const {
-      title, description, rating, userId, tags,
+      title, description, rating, tags,
     } = req.body;
 
-    if (!title || !description || !rating || !userId || !tags) {
+    const { id } = req.user;
+
+    if (!title || !description || !rating || !tags) {
       throw new AppError('Missing body parameter', 400);
     }
 
@@ -17,7 +19,7 @@ class MovieNotesController {
       throw new AppError('Rating must be between 0 and 5', 400);
     }
 
-    const userExists = await knex('users').where({ id: userId });
+    const userExists = await knex('users').where({ id });
 
     if (!userExists) {
       throw new AppError('User not found', 400);
@@ -31,14 +33,14 @@ class MovieNotesController {
       title,
       description,
       rating,
-      user_id: userId,
+      user_id: id,
     }).returning('*');
 
     console.log(tags);
 
     const tagsInsert = tags.map((name) => ({
       movieNote_id: movieNote.id,
-      user_id: userId,
+      user_id: id,
       name,
     }));
 
