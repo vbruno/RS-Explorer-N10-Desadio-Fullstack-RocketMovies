@@ -10,6 +10,10 @@ Esse projeto foi desenvolvido com o intuito de colocar em prática os conhecimen
 
 * [Figma](https://www.figma.com/file/TVit4hySOFocrqABb79uWn/RocketMovies-(Copy)?type=design&node-id=0%3A1&mode=design&t=R9G1VywrBcNvMM2b-1)
 
+## Repositório
+
+* [GitHub](https://github.com/vbruno/RS-Explorer-N10-Desadio-Fullstack-RocketMovies)
+
 ## Tecnologias
 
 * [React](https://pt-br.reactjs.org/)
