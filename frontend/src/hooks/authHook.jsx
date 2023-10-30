@@ -38,7 +38,6 @@ export const AuthProvider = ({ children }) => {
     setDataUser({});
   }
 
-  // [ ] - Verificar se esta funcionalidade está correta
   async function updateProfile({ user, avatarFile }) {
     try {
       if (avatarFile) {

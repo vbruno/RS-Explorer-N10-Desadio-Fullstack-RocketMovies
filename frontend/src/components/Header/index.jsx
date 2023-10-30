@@ -2,10 +2,18 @@ import { Container, Profile } from "./styles";
 
 import { useAuth } from "../../hooks/authHook";
 
+import { api } from "../../services/api";
+
+import avatarPlaceholder from "../../assets/avatar_placeholder.svg";
+
 import { InputText } from "../InputText";
 
 export function Header() {
-  const { signOut } = useAuth();
+  const { signOut, user } = useAuth();
+
+  const avatarUrl = user.avatar
+    ? `${api.defaults.baseURL}/files/${user.avatar}`
+    : avatarPlaceholder;
 
   function handleSignOut() {
     signOut();
@@ -19,10 +27,10 @@ export function Header() {
 
       <Profile to={"/profile"}>
         <div>
-          <strong>Bruno S. Velho</strong>
+          <strong>{user.name}</strong>
           <button onClick={handleSignOut}>sair</button>
         </div>
-        <img src="http://github.com/vbruno.png" alt="Foto do usuário" />
+        <img src={avatarUrl} alt="Foto do usuário" />
       </Profile>
     </Container>
   );

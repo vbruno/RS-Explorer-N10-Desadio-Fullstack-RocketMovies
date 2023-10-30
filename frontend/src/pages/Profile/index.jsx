@@ -44,6 +44,15 @@ export function Profile() {
     await updateProfile({ user: userUpdated, avatarFile });
   }
 
+  function handleChangeAvatar(e) {
+    const file = e.target.files[0];
+
+    setAvatarFile(file);
+
+    const imagePreview = URL.createObjectURL(file);
+    setAvatar(imagePreview);
+  }
+
   return (
     <Container>
       <header>
@@ -55,11 +64,11 @@ export function Profile() {
 
       <Form>
         <Avatar>
-          <img src="http://github.com/vbruno.png" alt="Foto do usuário" />
+          <img src={avatar} alt="Foto do usuário" />
 
           <label htmlFor="avatar">
             <FiCamera />
-            <input type="file" id="avatar" />
+            <input type="file" id="avatar" onChange={handleChangeAvatar} />
           </label>
         </Avatar>
 
