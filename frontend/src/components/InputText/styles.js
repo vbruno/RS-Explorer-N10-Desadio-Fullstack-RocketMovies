@@ -11,6 +11,18 @@ export const Container = styled.div`
 
   border-radius: 10px;
 
+  > button {
+    display: flex;
+    align-items: center;
+
+    background: transparent;
+    border: none;
+
+    color: ${({ theme }) => theme.COLORS.GRAY_300};
+
+    margin-right: 16px;
+  }
+
   > input {
     height: 56px;
     width: 100%;
