@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FiArrowLeft, FiUser, FiMail, FiLock, FiCamera } from "react-icons/fi";
 import { Container, Form, Avatar } from "./styles";
 
@@ -6,13 +6,19 @@ import { InputText } from "../../components/InputText";
 import { Button } from "../../components/Button";
 
 export function Profile() {
+  const navigate = useNavigate();
+
+  function handleBack() {
+    navigate(-1);
+  }
+
   return (
     <Container>
       <header>
-        <Link to="/">
+        <button onClick={handleBack}>
           <FiArrowLeft />
           <span>Voltar</span>
-        </Link>
+        </button>
       </header>
 
       <Form>

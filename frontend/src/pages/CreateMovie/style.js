@@ -6,7 +6,10 @@ export const Content = styled.div`
   min-height: 90vh;
   padding: 40px 123px 100px;
 
-  a {
+  button {
+    background: transparent;
+    border: none;
+
     display: flex;
     align-items: center;
     gap: 8px;

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FiArrowLeft } from "react-icons/fi";
 import { Container, Content, Form, Bookmarks, Action } from "./style";
 
@@ -9,14 +9,20 @@ import { Marker } from "../../components/Marker";
 import { Button } from "../../components/Button";
 
 export function CreateMovie() {
+  const navigate = useNavigate();
+
+  function handleBack() {
+    navigate(-1);
+  }
+
   return (
     <Container>
       <Header />
       <Content>
-        <Link to={"/"}>
+        <button onClick={handleBack}>
           <FiArrowLeft />
           <span>Voltar</span>
-        </Link>
+        </button>
         <Form>
           <h1>Novo Filme</h1>
           <div>

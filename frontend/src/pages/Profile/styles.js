@@ -15,8 +15,11 @@ export const Container = styled.div`
 
     padding: 0 124px;
 
-    > a {
+    > button {
       color: ${({ theme }) => theme.COLORS.PINK};
+
+      background: transparent;
+      border: none;
 
       display: flex;
       align-items: center;
