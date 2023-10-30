@@ -6,7 +6,7 @@ const { sessionsRoutes } = require('./sessions.routes');
 const routes = Router();
 
 routes.use('/users', usersRouter);
-routes.use('/notes', movieNotesRouter);
+routes.use('/movies', movieNotesRouter);
 routes.use('/sessions', sessionsRoutes);
 
 module.exports = { routes };

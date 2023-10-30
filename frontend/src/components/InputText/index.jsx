@@ -12,7 +12,10 @@ export function InputText({ icon: Icon, isPassword = false, ...rest }) {
   return (
     <Container>
       {Icon && <Icon size={20} />}
-      <input {...rest} type={isPassword && (isVisible ? "text" : "password")} />
+      <input
+        {...rest}
+        type={(isPassword && (isVisible ? "text" : "password")) || "text"}
+      />
       {isPassword &&
         (isVisible ? (
           <button type="button" onClick={handleToggleVisibility}>

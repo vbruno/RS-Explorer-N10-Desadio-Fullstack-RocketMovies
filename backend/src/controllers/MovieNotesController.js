@@ -57,7 +57,7 @@ class MovieNotesController {
   }
 
   async index(req, res) {
-    const { id } = req.params;
+    const { id } = req.user;
 
     const idExists = await knex('movie_notes').where({ id });
 
@@ -65,11 +65,30 @@ class MovieNotesController {
       throw new AppError('Movie note not found', 400);
     }
 
-    const [movieNote] = await knex('movie_notes').where({ id });
+    const movieNote = await knex('movie_notes')
+      .select([
+        'movie_notes.id',
+        'movie_notes.title',
+        'movie_notes.description',
+        'movie_notes.rating',
+      ])
+      .where({ user_id: id });
 
-    const tags = await knex('movie_tags').where({ user_id: id }).orderBy('name');
+    const tags = await knex('movie_tags')
+      .select(['movie_tags.id', 'movie_tags.name', 'movie_tags.movieNote_id'])
+      .where({ user_id: id })
+      .orderBy('name');
 
-    return res.json({ ...movieNote, tags });
+    const movieWithTags = movieNote.map((movie) => {
+      const movieTags = tags.filter((tag) => tag.movieNote_id === movie.id);
+
+      return {
+        ...movie,
+        tags: movieTags,
+      };
+    });
+
+    return res.json(movieWithTags);
   }
 
   async delete(req, res) {

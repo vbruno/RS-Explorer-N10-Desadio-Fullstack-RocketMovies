@@ -1,4 +1,4 @@
-@rota = notes
+@rota = movies
 @idUser = 1
 
 ###
@@ -25,7 +25,7 @@ Authorization: bearer {{token}}
 
 ###
 # @name Index
-GET {{url}}/{{rota}}/1
+GET {{url}}/{{rota}}
 Authorization: bearer {{token}}
 
 ###

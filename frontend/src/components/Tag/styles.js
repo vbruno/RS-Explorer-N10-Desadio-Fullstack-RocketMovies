@@ -9,5 +9,5 @@ export const Container = styled.div`
   background: ${({ theme }) => theme.COLORS.GRAY_700};
 
   text-align: center;
-
+  text-transform: capitalize;
 `;

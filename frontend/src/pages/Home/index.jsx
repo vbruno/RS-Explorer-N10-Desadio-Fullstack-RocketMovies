@@ -1,6 +1,10 @@
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiPlus } from "react-icons/fi";
+
 import { Container, Content } from "./styles";
+
+import { api } from "../../services/api";
 
 import { Header } from "../../components/Header";
 import { Button } from "../../components/Button";
@@ -12,9 +16,21 @@ const textDescription =
 export function Home() {
   const navigate = useNavigate();
 
+  const [movies, setMovies] = useState([]);
+
   function handleAddMovie() {
     navigate("/create-movie");
   }
+
+  useEffect(() => {
+    async function loadMovies() {
+      const response = await api.get("/movies/showAll");
+
+      setMovies(response.data);
+    }
+
+    loadMovies();
+  }, []);
 
   return (
     <Container>
@@ -29,24 +45,16 @@ export function Home() {
           />
         </div>
         <section>
-          <BoxMovieDetail
-            title={"Interestellar"}
-            rate={3}
-            description={textDescription}
-            tags={["Drama", "Aventura"]}
-          />
-          <BoxMovieDetail
-            title={"Interestellar"}
-            rate={3}
-            description={textDescription}
-            tags={["Drama", "Aventura"]}
-          />
-          <BoxMovieDetail
-            title={"Interestellar"}
-            rate={3}
-            description={textDescription}
-            tags={["Drama", "Aventura"]}
-          />
+          {movies &&
+            movies.map((movie, index) => (
+              <BoxMovieDetail
+                key={index}
+                title={movie.title}
+                rate={movie.rating}
+                description={movie.description}
+                tags={movie.tags}
+              />
+            ))}
         </section>
       </Content>
     </Container>

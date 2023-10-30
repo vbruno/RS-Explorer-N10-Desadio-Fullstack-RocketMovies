@@ -12,8 +12,7 @@ movieNotesRouter.get('/', (req, res) => {
 movieNotesRouter.use(ensureAuthenticated);
 
 movieNotesRouter.post('/create', movieNotesController.create);
-movieNotesRouter.get('/showAll', movieNotesController.showAll);
-movieNotesRouter.get('/:id', movieNotesController.index);
+movieNotesRouter.get('/showAll', movieNotesController.index);
 movieNotesRouter.delete('/:id', movieNotesController.delete);
 movieNotesRouter.put('/:id', movieNotesController.update);
 
