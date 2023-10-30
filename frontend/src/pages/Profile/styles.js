@@ -43,6 +43,12 @@ export const Form = styled.form`
   max-width: 340px;
   margin: 30px auto 0;
 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 8px;
+
   > div:nth-child(4) {
     margin-top: 24px;
   }

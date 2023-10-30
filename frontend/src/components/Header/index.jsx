@@ -1,9 +1,16 @@
-import { Link } from "react-router-dom";
 import { Container, Profile } from "./styles";
+
+import { useAuth } from "../../hooks/authHook";
 
 import { InputText } from "../InputText";
 
 export function Header() {
+  const { signOut } = useAuth();
+
+  function handleSignOut() {
+    signOut();
+  }
+
   return (
     <Container>
       <h1>RocketMovies</h1>
@@ -13,9 +20,8 @@ export function Header() {
       <Profile to={"/profile"}>
         <div>
           <strong>Bruno S. Velho</strong>
-          <Link to="/">sair</Link>
+          <button onClick={handleSignOut}>sair</button>
         </div>
-
         <img src="http://github.com/vbruno.png" alt="Foto do usuário" />
       </Profile>
     </Container>

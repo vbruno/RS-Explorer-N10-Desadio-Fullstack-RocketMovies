@@ -57,7 +57,11 @@ export const Profile = styled(Link)`
       color: ${({ theme }) => theme.COLORS.GRAY_000};
     }
 
-    a {
+    button {
+      z-index: 1;
+      background: none;
+      border: none;
+      text-align: right;
       font-size: 14px;
       color: ${({ theme }) => theme.COLORS.GRAY_300};
     }

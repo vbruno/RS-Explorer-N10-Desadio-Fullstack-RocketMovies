@@ -9,8 +9,6 @@ export function Button({
   variant = false,
   ...rest
 }) {
-  console.log(variant);
-
   return (
     <Container type="button" disabled={loading} {...rest} $variant={variant}>
       {Icon && <Icon size={20} />}

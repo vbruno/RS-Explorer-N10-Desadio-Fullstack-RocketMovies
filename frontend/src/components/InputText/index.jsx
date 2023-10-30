@@ -1,5 +1,10 @@
 import { Container } from "./styles";
 
-export function InputText(props) {
-  return <Container {...props} />;
+export function InputText({ icon: Icon, ...rest }) {
+  return (
+    <Container>
+      {Icon && <Icon size={20} />}
+      <input {...rest} />
+    </Container>
+  );
 }

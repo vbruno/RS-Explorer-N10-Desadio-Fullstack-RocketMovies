@@ -1,12 +1,12 @@
 import styled from "styled-components";
-import backgroundImg from '../../assets/background.png'
+import backgroundImg from "../../assets/background.png";
 
 export const Container = styled.div`
   height: 100vh;
 
   display: flex;
   align-items: stretch;
-`
+`;
 export const Form = styled.form`
   padding: 0 136px;
 
@@ -14,6 +14,8 @@ export const Form = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  gap: 8px;
 
   text-align: center;
 

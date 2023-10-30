@@ -1,11 +1,32 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FiMail, FiLock } from "react-icons/fi";
 
+import { useAuth } from "../../hooks/authHook";
+
 import { Container, Form, Background } from "./styles";
-import { Input } from "../../components/Input";
+import { InputText } from "../../components/InputText";
 import { Button } from "../../components/Button";
 
 export function SignIn() {
+  const { signIn } = useAuth();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  function handleSignIn() {
+    if (!email || !password) {
+      return alert("Preencha todos os campos");
+    }
+
+    const dataUser = {
+      email,
+      password,
+    };
+
+    signIn(dataUser);
+  }
+
   return (
     <Container>
       <Form>
@@ -14,10 +35,19 @@ export function SignIn() {
 
         <h2>Faça seu login</h2>
 
-        <Input placeholder="E-mail" icon={FiMail} />
-        <Input placeholder="password" icon={FiLock} type="password" />
+        <InputText
+          placeholder="E-mail"
+          icon={FiMail}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <InputText
+          placeholder="password"
+          icon={FiLock}
+          type="password"
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
-        <Button title={"Entrar"} />
+        <Button title={"Entrar"} onClick={handleSignIn} />
 
         <Link to={"/register"}>Criar conta</Link>
       </Form>
