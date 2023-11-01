@@ -30,7 +30,7 @@ export const Container = styled.div`
   }
 
   > input {
-    text-align: center;
+    text-align: ${({ $is_new }) => ($is_new ? "left" : "center")};
 
     color: ${({ theme, $is_new }) =>
       $is_new ? theme.COLORS.GRAY_300 : theme.COLORS.GRAY_000};
@@ -38,7 +38,7 @@ export const Container = styled.div`
     background: transparent;
     border: none;
 
-    font-family: Roboto;
+    font-family: "Roboto";
     font-size: 16px;
     font-style: normal;
     font-weight: 400;

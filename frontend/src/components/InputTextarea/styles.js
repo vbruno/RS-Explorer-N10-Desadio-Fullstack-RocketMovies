@@ -13,5 +13,11 @@ export const Container = styled.textarea`
   background: ${({ theme }) => theme.COLORS.GRAY_800};
   color: ${({ theme }) => theme.COLORS.GRAY_000};
 
+  font-family: "Roboto";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+
   resize: none;
 `;

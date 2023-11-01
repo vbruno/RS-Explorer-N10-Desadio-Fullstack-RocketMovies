@@ -36,15 +36,11 @@ class MovieNotesController {
       user_id: id,
     }).returning('*');
 
-    console.log(tags);
-
     const tagsInsert = tags.map((name) => ({
       movieNote_id: movieNote.id,
       user_id: id,
       name,
     }));
-
-    console.log(tagsInsert);
 
     await knex('movie_tags').insert(tagsInsert);
 

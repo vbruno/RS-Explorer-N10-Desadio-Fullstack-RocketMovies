@@ -6,7 +6,7 @@ export const Content = styled.div`
   min-height: 90vh;
   padding: 40px 123px 100px;
 
-  button {
+  > button:first-child {
     background: transparent;
     border: none;
 
