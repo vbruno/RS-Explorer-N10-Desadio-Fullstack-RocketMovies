@@ -5,6 +5,7 @@ import { FiPlus } from "react-icons/fi";
 import { Container, Content } from "./styles";
 
 import { api } from "../../services/api";
+import { useDebounce } from "../../hooks/debounceHook";
 
 import { Header } from "../../components/Header";
 import { Button } from "../../components/Button";
@@ -12,6 +13,7 @@ import { BoxMovieDetail } from "../../components/BoxMovieDetail";
 
 export function Home() {
   const navigate = useNavigate();
+  const { debounce } = useDebounce(1000);
 
   const [movies, setMovies] = useState([]);
   const [search, setSearch] = useState("");
@@ -30,9 +32,18 @@ export function Home() {
     loadMovies();
   }, []);
 
+  useEffect(() => {
+    if (search === "") return;
+
+    debounce(async () => {
+      const response = await api.get(`/movies/index?title=${search}`);
+      setMovies(response.data);
+    });
+  }, [search, debounce]);
+
   return (
     <Container>
-      <Header />
+      <Header value={search} onChange={(e) => setSearch(e.target.value)} />
       <Content>
         <div>
           <h1>Meus filmes</h1>

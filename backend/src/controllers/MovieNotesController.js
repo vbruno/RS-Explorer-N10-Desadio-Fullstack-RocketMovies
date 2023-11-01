@@ -48,11 +48,6 @@ class MovieNotesController {
   }
 
   async showAll(req, res) {
-    const movieNotes = await knex('movie_notes').select('*');
-    return res.json(movieNotes);
-  }
-
-  async index(req, res) {
     const { id } = req.user;
 
     const idExists = await knex('movie_notes').where({ id });
@@ -74,6 +69,43 @@ class MovieNotesController {
       .select(['movie_tags.id', 'movie_tags.name', 'movie_tags.movieNote_id'])
       .where({ user_id: id })
       .orderBy('name');
+
+    const movieWithTags = movieNote.map((movie) => {
+      const movieTags = tags.filter((tag) => tag.movieNote_id === movie.id);
+
+      return {
+        ...movie,
+        tags: movieTags,
+      };
+    });
+
+    return res.json(movieWithTags);
+  }
+
+  async index(req, res) {
+    const { id } = req.user;
+    const { title } = req.query;
+
+    const idExists = await knex('movie_notes').where({ id });
+
+    if (!idExists) {
+      throw new AppError('Movie note not found', 400);
+    }
+
+    const movieNote = await knex('movie_notes')
+      .select([
+        'movie_notes.id',
+        'movie_notes.title',
+        'movie_notes.description',
+        'movie_notes.rating',
+      ])
+      .where({ user_id: id })
+      .whereLike('movie_notes.title', `%${title}%`);
+
+    const tags = await knex('movie_tags')
+      .select('movie_tags.id', 'movie_tags.name', 'movie_tags.movieNote_id')
+      .innerJoin('movie_notes', 'movie_notes.id', 'movie_tags.movieNote_id')
+      .whereLike('movie_notes.title', `%${title}%`);
 
     const movieWithTags = movieNote.map((movie) => {
       const movieTags = tags.filter((tag) => tag.movieNote_id === movie.id);
