@@ -37,7 +37,6 @@ export function MoviePreview() {
     async function loadMovie() {
       const response = await api.get(`/movies/show/${id}`);
 
-      console.log(response.data);
       setMovie(response.data);
       setTags(response.data.tags);
     }

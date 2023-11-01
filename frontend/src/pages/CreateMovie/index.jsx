@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useResolvedPath } from "react-router-dom";
 import { FiArrowLeft } from "react-icons/fi";
 import { Container, Content, Form, Bookmarks, Action } from "./style";
@@ -62,6 +62,69 @@ export function CreateMovie() {
     }
   }
 
+  async function handleUpdateMovie() {
+    if (!window.confirm("Deseja realmente atualizar este filme?")) return;
+
+    const movieUpdate = {
+      title,
+      rating,
+      description,
+      tags,
+    };
+
+    try {
+      const id = pathname.split("/")[3];
+      const response = await api.put(`/movies/${id}`, movieUpdate);
+
+      if (response.data) {
+        alert("Filme atualizado com sucesso!");
+        navigate(-1);
+      }
+    } catch (error) {
+      if (error.response) {
+        alert(error.response.data.message);
+      } else {
+        alert("Erro ao atualizar o filme, tente novamente mais tarde");
+      }
+    }
+  }
+
+  async function handleDeleteMovie() {
+    if (!window.confirm("Deseja realmente excluir este filme?")) return;
+    try {
+      const id = pathname.split("/")[3];
+      const response = await api.delete(`/movies/${id}`);
+
+      if (response.data) {
+        alert("Filme deletado com sucesso!");
+        navigate("/");
+      }
+    } catch (error) {
+      if (error.response) {
+        alert(error.response.data.message);
+      } else {
+        alert("Erro ao deletar o filme, tente novamente mais tarde");
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (pathname === "/create-movie") return;
+
+    async function loadMovie() {
+      const id = pathname.split("/")[3];
+      const response = await api.get(`/movies/show/${id}`);
+
+      setTags(response.data.tags.map((tag) => tag.name));
+
+      setTitle(response.data.title);
+      setRating(response.data.rating);
+      setDescription(response.data.description);
+    }
+
+    loadMovie();
+  }, [pathname]);
+
   return (
     <Container>
       <Header />
@@ -72,20 +135,23 @@ export function CreateMovie() {
         </button>
         <Form>
           <h1>
-            {!pathname === "/create-movie" ? "Atualizar Filme" : "Novo Filme"}
+            {pathname === "/create-movie" ? "Novo Filme" : "Atualizar Filme"}
           </h1>
           <div>
             <InputText
               placeholder="Título"
+              value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
             <InputText
               placeholder="Sua Nota (de 0 a 5)"
+              value={rating}
               onChange={(e) => setRating(e.target.value)}
             />
           </div>
           <InputTextarea
             placeholder="Observações"
+            value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
           <Bookmarks>
@@ -108,16 +174,19 @@ export function CreateMovie() {
             </div>
           </Bookmarks>
           <Action>
-            {!pathname === "/create-movie" && (
-              <Button title={"Excluir filme"} variant />
+            {pathname.split("/")[2] === "edit" && (
+              <Button
+                title={"Excluir filme"}
+                variant
+                onClick={handleDeleteMovie}
+              />
             )}
 
-            <Button
-              title={
-                pathname === "/create-movie" ? "Salvar" : "Salvar alterações"
-              }
-              onClick={handleCreateMovie}
-            />
+            {pathname === "/create-movie" ? (
+              <Button title={"Salvar"} onClick={handleCreateMovie} />
+            ) : (
+              <Button title={"Salvar alterações"} onClick={handleUpdateMovie} />
+            )}
           </Action>
         </Form>
       </Content>

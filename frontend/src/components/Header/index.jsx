@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Container, Profile } from "./styles";
 
 import { useAuth } from "../../hooks/authHook";
@@ -21,7 +22,9 @@ export function Header({ value, onChange }) {
 
   return (
     <Container>
-      <h1>RocketMovies</h1>
+      <Link to={"/"}>
+        <h1>RocketMovies</h1>
+      </Link>
 
       <InputText
         placeholder="Pesquisar por título"

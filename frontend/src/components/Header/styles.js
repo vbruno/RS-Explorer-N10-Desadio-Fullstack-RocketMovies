@@ -16,7 +16,7 @@ export const Container = styled.div`
 
   border-bottom: 1px solid ${({ theme }) => theme.COLORS.GRAY_600};
 
-  > h1 {
+  > a h1 {
     color: ${({ theme }) => theme.COLORS.PINK};
     font-family: "Roboto Slab";
     font-size: 24px;
