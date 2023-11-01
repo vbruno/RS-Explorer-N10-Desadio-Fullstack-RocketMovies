@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useResolvedPath } from "react-router-dom";
 import { FiArrowLeft } from "react-icons/fi";
 import { Container, Content, Form, Bookmarks, Action } from "./style";
 
@@ -13,6 +13,7 @@ import { api } from "../../services/api";
 
 export function CreateMovie() {
   const navigate = useNavigate();
+  const { pathname } = useResolvedPath();
 
   const [title, setTitle] = useState("");
   const [rating, setRating] = useState("");
@@ -70,7 +71,9 @@ export function CreateMovie() {
           <span>Voltar</span>
         </button>
         <Form>
-          <h1>Novo Filme</h1>
+          <h1>
+            {!pathname === "/create-movie" ? "Atualizar Filme" : "Novo Filme"}
+          </h1>
           <div>
             <InputText
               placeholder="Título"
@@ -105,8 +108,16 @@ export function CreateMovie() {
             </div>
           </Bookmarks>
           <Action>
-            <Button title={"Excluir filme"} variant />
-            <Button title={"Salvar alterações"} onClick={handleCreateMovie} />
+            {!pathname === "/create-movie" && (
+              <Button title={"Excluir filme"} variant />
+            )}
+
+            <Button
+              title={
+                pathname === "/create-movie" ? "Salvar" : "Salvar alterações"
+              }
+              onClick={handleCreateMovie}
+            />
           </Action>
         </Form>
       </Content>

@@ -62,6 +62,7 @@ export function Home() {
                 rate={movie.rating}
                 description={movie.description}
                 tags={movie.tags}
+                onClick={() => navigate(`/movie/${movie.id}`)}
               />
             ))}
         </section>

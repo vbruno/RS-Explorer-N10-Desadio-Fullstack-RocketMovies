@@ -41,6 +41,25 @@ export const MovieTitle = styled.h1`
     margin: 0;
   }
 
+  > button {
+    margin-left: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: none;
+    border: none;
+
+    svg {
+      font-size: 26px;
+      color: ${({ theme }) => theme.COLORS.PINK};
+
+      &:hover {
+        color: ${({ theme }) => theme.COLORS.RED};
+      }
+    }
+  }
+
   svg {
     font-size: 26px;
   }

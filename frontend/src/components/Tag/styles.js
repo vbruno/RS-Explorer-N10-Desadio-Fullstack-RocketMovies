@@ -7,6 +7,7 @@ export const Container = styled.div`
   border-radius: 8px;
 
   background: ${({ theme }) => theme.COLORS.GRAY_700};
+  color: ${({ theme }) => theme.COLORS.GRAY_100};
 
   text-align: center;
   text-transform: capitalize;

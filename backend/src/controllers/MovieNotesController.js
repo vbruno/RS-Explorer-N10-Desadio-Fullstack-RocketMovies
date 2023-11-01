@@ -82,6 +82,34 @@ class MovieNotesController {
     return res.json(movieWithTags);
   }
 
+  async show(req, res) {
+    const { idMovie } = req.params;
+    const { id } = req.user;
+
+    const idExists = await knex('movie_notes').where({ id });
+
+    if (!idExists) {
+      throw new AppError('Movie note not found', 400);
+    }
+
+    const movieNote = await knex('movie_notes')
+      .select(['movie_notes.*', 'users.name as user_name', 'users.avatar as user_avatar'])
+      .where({ 'movie_notes.id': idMovie })
+      .innerJoin('users', 'users.id', 'movie_notes.user_id')
+      .first();
+
+    const tags = await knex('movie_tags')
+      .select(['movie_tags.id', 'movie_tags.name', 'movie_tags.movieNote_id'])
+      .where({ user_id: id })
+      .orderBy('name');
+
+    const movieTags = tags.filter((tag) => tag.movieNote_id === movieNote.id);
+
+    console.log({ ...movieNote, tags: movieTags });
+
+    return res.json({ ...movieNote, tags: movieTags });
+  }
+
   async index(req, res) {
     const { id } = req.user;
     const { title } = req.query;

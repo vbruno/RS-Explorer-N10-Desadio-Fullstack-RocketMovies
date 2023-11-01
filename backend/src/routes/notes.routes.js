@@ -14,6 +14,7 @@ movieNotesRouter.use(ensureAuthenticated);
 movieNotesRouter.post('/create', movieNotesController.create);
 movieNotesRouter.get('/showAll', movieNotesController.showAll);
 movieNotesRouter.get('/index', movieNotesController.index);
+movieNotesRouter.get('/show/:idMovie', movieNotesController.show);
 movieNotesRouter.delete('/:id', movieNotesController.delete);
 movieNotesRouter.put('/:id', movieNotesController.update);
 
